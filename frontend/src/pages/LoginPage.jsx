@@ -1,72 +1,50 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../firebase";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/"); // Redirect to Home Page
+    setError("");
+
+    try {
+      await loginUser(email, password);
+      navigate("/HomePage"); // Redirect to Home Page
+    } catch (error) {
+      setError("Invalid email or password.");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-3xl font-semibold text-center text-green-600 mb-6">Login</h2>
 
+        {error && <p className="text-red-500 text-center">{error}</p>}
 
-        <form onSubmit={handleLogin}>
-
-
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg"
-            />
-          </div>
-
-
-          <div className="mb-4">
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg"
-            />
-          </div>
-
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg"
-            onClick={() => navigate("/HomePage")}
-          >
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email" required className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-green-500" />
+          
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password" required className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-green-500" />
+          
+          <button type="submit" className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
             Login
           </button>
-
         </form>
-
 
         <p className="mt-4 text-center">
           Don't have an account?{" "}
-          <button
-            className="text-blue-500 underline"
-            onClick={() => navigate("/signup")}
-          >
+          <button className="text-green-500 underline" onClick={() => navigate("/signup")}>
             Sign Up
           </button>
         </p>
-
-
       </div>
     </div>
   );

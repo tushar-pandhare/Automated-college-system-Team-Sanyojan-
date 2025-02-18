@@ -1,70 +1,82 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
+    const modules = [
+        { id: 1, title: "Elections", description: "Secure voting & live tracking", icon: "🗳️", link: "/elections" },
+        { id: 2, title: "Notifications", description: "Health & leave alerts", icon: "📢", link: "/notifications" },
+        { id: 3, title: "Booking", description: "Reserve campus facilities", icon: "🏢", link: "/booking" },
+        { id: 4, title: "Applications", description: "Submit & track approvals", icon: "📄", link: "/applications" },
+        { id: 5, title: "Complaints", description: "Anonymous complaint system", icon: "💬", link: "/complaints" },
+        { id: 6, title: "Budget Tracking", description: "Transparent finance records", icon: "💰", link: "/budget" },
+    ];
+
     return (
-        <div className="min-h-screen bg-cover bg-center flex flex-col justify-between" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0)' }}>
-            <nav className="bg-gray-900 bg-opacity-75 p-4">
+        <div className="flex flex-col h-screen">
+            {/* Navbar */}
+            <nav className="bg-gradient-to-r from-blue-800 to-blue-900 p-4 text-white shadow-md">
                 <div className="container mx-auto flex justify-between items-center">
-                    <h1 className="text-white text-2xl font-bold">College System</h1>
+                    <h1 className="text-2xl font-bold">Team Sanyojan</h1>
                     <ul className="flex space-x-6">
-                        <li>
-                            <Link to="/elections" className="text-white hover:underline">Elections</Link>
-                        </li>
-                        <li>
-                            <Link to="/notifications" className="text-white hover:underline">Notifications</Link>
-                        </li>
-                        <li>
-                            <Link to="/booking" className="text-white hover:underline">Booking</Link>
-                        </li>
-                        <li>
-                            <Link to="/applications" className="text-white hover:underline">Applications</Link>
-                        </li>
-                        <li>
-                            <Link to="/complaints" className="text-white hover:underline">Complaints</Link>
-                        </li>
-                        <li>
-                            <Link to="/budget" className="text-white hover:underline">Budget Tracking</Link>
-                        </li>
+                        {modules.map((module) => (
+                            <li key={module.id}>
+                                <Link to={module.link} className="hover:underline">{module.title}</Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </nav>
-            <div className="container mx-auto p-8 bg-white bg-opacity-80 rounded-lg shadow-lg mt-10">
-                <h1 className="text-4xl font-bold mb-6 text-center">Welcome to the College System</h1>
-                <p className="text-gray-700 mb-6 text-center">
-                    Our automated, paperless, and transparent college system ensures efficiency, fairness, and accessibility for all students and faculty members. Explore our features and functionalities designed to make your college experience better.
-                </p>
-                <div className="flex flex-wrap justify-center items-start space-x-8 space-y-8">
-                    <div className="w-full md:w-1/3 bg-blue-100 p-4 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Elections</h2>
-                        <p className="text-gray-600">Participate in online elections with secure voting and live result tracking.</p>
+
+            {/* Main Content */}
+            <div className="flex flex-1">
+                {/* Sidebar */}
+                <aside className="w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white p-6 flex flex-col">
+                    <h2 className="text-xl font-semibold mb-6 text-center">Dashboard</h2>
+                    <nav>
+                        <ul className="space-y-3">
+                            {modules.map((module) => (
+                                <li key={module.id}>
+                                    <Link to={module.link} className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                                        <span className="mr-3 text-xl">{module.icon}</span> {module.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                    <Link to="/logout" className="mt-auto text-center text-red-400 hover:text-red-600 font-semibold transition">
+                        Logout
+                    </Link>
+                </aside>
+
+                {/* Dashboard Section */}
+                <main className="flex-1 bg-gray-100 p-10">
+                    <h1 className="text-3xl font-bold text-gray-800">Welcome to the Automated College System</h1>
+                    <p className="text-gray-600 mb-6">Ensuring efficiency, fairness, and transparency in college administration.</p>
+
+                    {/* Modules Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {modules.map((module, index) => (
+                            <motion.div
+                                key={module.id}
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1, duration: 0.3 }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition"
+                            >
+                                <div className="text-4xl">{module.icon}</div>
+                                <h2 className="text-xl font-semibold mt-3">{module.title}</h2>
+                                <p className="text-gray-600 mt-2">{module.description}</p>
+                            </motion.div>
+                        ))}
                     </div>
-                    <div className="w-full md:w-1/3 bg-green-100 p-4 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Notifications</h2>
-                        <p className="text-gray-600">Receive automated health and leave notifications for better safety and communication.</p>
-                    </div>
-                    <div className="w-full md:w-1/3 bg-yellow-100 p-4 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Booking</h2>
-                        <p className="text-gray-600">Easily book campus facilities with prior approval and availability status.</p>
-                    </div>
-                    <div className="w-full md:w-1/3 bg-red-100 p-4 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Applications</h2>
-                        <p className="text-gray-600">Submit and track applications for events, budgets, and sponsorships with transparent approval workflows.</p>
-                    </div>
-                    <div className="w-full md:w-1/3 bg-purple-100 p-4 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Complaints</h2>
-                        <p className="text-gray-600">Submit anonymous complaints and track their status with our transparent complaint management system.</p>
-                    </div>
-                    <div className="w-full md:w-1/3 bg-pink-100 p-4 rounded-lg shadow-lg">
-                        <h2 className="text-xl font-semibold mb-2">Budget Tracking</h2>
-                        <p className="text-gray-600">Access transparent records of college budgets and sponsorships, ensuring accountability.</p>
-                    </div>
-                </div>
+                </main>
             </div>
-            <footer className="bg-gray-900 bg-opacity-75 p-4 text-center text-white">
-                © 2025 <b> Team Sanyog</b>
-                <br />
-                All rights reserved.
+
+            {/* Footer */}
+            <footer className="bg-gray-900 text-white p-4 text-center">
+                &copy; 2025 <b>Team Sanyojan</b>. All rights reserved.
             </footer>
         </div>
     );
