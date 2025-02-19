@@ -188,7 +188,16 @@ const SignupPage = () => {
           <button type="submit" className="w-full bg-blue-500 text-white py-3 rounded-lg">
             {isLoading ? "Signing up..." : "Sign Up"}
           </button>
+
         </form>
+        <div>
+        <p className="text-center text-white/60 mt-4">
+        Already have an account?{" "}
+        <button onClick={() => navigate("/login")} className="text-blue-400 hover:underline">
+          Login
+        </button>
+      </p>
+        </div>
       </motion.div>
     </div>
   );

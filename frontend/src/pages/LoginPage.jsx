@@ -139,7 +139,7 @@ const LoginPage = () => {
         <p className="text-center text-white/60 mt-4">
           Don't have an account?{" "}
           <button
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/")}
             className="text-blue-400 hover:underline"
           >
             Sign Up
