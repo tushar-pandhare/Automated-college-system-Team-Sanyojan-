@@ -10,13 +10,18 @@ import BudgetComponent from './components/BudgetComponent';
 import "./index.css"
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import ParentPortal from './pages/ParentPortal';
 const App = () => {
     return (
+     
         <Router>
             <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route exact path="/HomePage" element={<HomePage />} />
+                {/* <Route path="/" element={<RoleSelectionPage />} /> */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/" element={<SignupPage />} />
+                {/* <Route path="/verify-email" element={<VerifyEmailPage />} /> */}
+                <Route exact path="/student-dashboard" element={<HomePage />} />
+                <Route exact path="/parent-portal" element={<ParentPortal />} />
                 <Route path="/elections" element={<ElectionPage />} />
                 <Route path="/notifications" element={<NotificationComponent />} />
                 <Route path="/booking" element={<BookingComponent />} />
