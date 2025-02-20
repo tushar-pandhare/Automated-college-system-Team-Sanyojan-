@@ -18,6 +18,7 @@ const LoginPage = () => {
   const validateEmail = (email, role) => {
     const patterns = {
       student: /^20\d{2}(bcs|mcs|bce|mech)\d{3}@sggs\.ac\.in$/i,
+      mtech: /^20\d{2}mtech\d{3}@sggs\.ac\.in$/i,
       faculty: /^[a-z]+\.[a-z]+@sggs\.ac\.in$/i,
       admin: /^admin\.[a-z]+@sggs\.ac\.in$/i,
       doctor: /^dr\.[a-z]+@sggs\.ac\.in$/i,
@@ -38,7 +39,7 @@ const LoginPage = () => {
 
     try {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      navigate(`/${formData.role}-dashboard`); // Corrected role-based navigation
+      navigate(`/${formData.role}-dashboard`);
     } catch (err) {
       setError("Invalid email or password");
     } finally {
@@ -144,6 +145,17 @@ const LoginPage = () => {
           >
             Sign Up
           </button>
+        </p>
+        <p className="text-center text-white/60 mt-4">
+          <br/>
+          Click for : 
+          <button
+            onClick={() => navigate("/parent-portal")}
+            className="text-blue-400 hover:underline"
+          >
+            Parent Portal
+          </button>
+
         </p>
       </motion.div>
     </div>
