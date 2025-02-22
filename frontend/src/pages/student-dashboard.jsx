@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const Studentdashboard = () => {
     const modules = [
         { id: 1, title: "Elections", description: "Secure voting & live tracking", icon: "🗳️", link: "/elections" },
         { id: 2, title: "Notifications", description: "Health & leave alerts", icon: "📢", link: "/notifications" },
         { id: 3, title: "Booking", description: "Reserve campus facilities", icon: "🏢", link: "/booking" },
         { id: 4, title: "Applications", description: "Submit & track approvals", icon: "📄", link: "/applications" },
         { id: 5, title: "Complaints", description: "Anonymous complaint system", icon: "💬", link: "/complaints" },
-        { id: 6, title: "Budget Tracking", description: "Transparent finance records", icon: "💰", link: "/budget" },
-        
+        { id: 6, title: "Budget Tracking", description: "Transparent finance records", icon: "💰", link: "/Budgetnav" },
     ];
 
     return (
@@ -45,7 +44,7 @@ const HomePage = () => {
                         </ul>
                     </nav>
                     <Link to="/logout" className="mt-auto text-center text-red-400 hover:text-red-600 font-semibold transition">
-                        Logout 123
+                        Logout
                     </Link>
                 </aside>
 
@@ -83,4 +82,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default Studentdashboard;

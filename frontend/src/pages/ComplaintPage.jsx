@@ -88,6 +88,12 @@ const ComplaintPage = () => {
       <nav className="bg-gradient-to-r from-blue-800 to-blue-900 p-4 text-white shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Team Sanyojan - Complaints</h1>
+          <button
+            onClick={() => setIsAdmin(!isAdmin)}
+            className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded"
+          >
+            Toggle Admin ({isAdmin ? "ON" : "OFF"})
+          </button>
         </div>
       </nav>
 
@@ -98,7 +104,7 @@ const ComplaintPage = () => {
           <nav>
             <ul className="space-y-3">
               <li>
-                <a href="/signup" className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                <a href="/HomePage" className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition">
                   Home
                 </a>
               </li>
