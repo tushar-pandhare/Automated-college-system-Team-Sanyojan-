@@ -18,6 +18,7 @@ const LoginPage = () => {
   const validateEmail = (email, role) => {
     const patterns = {
       student: /^20\d{2}(bcs|mcs|bce|mech)\d{3}@sggs\.ac\.in$/i,
+      mtech: /^20\d{2}mtech\d{3}@sggs\.ac\.in$/i,
       faculty: /^[a-z]+\.[a-z]+@sggs\.ac\.in$/i,
       admin: /^admin\.[a-z]+@sggs\.ac\.in$/i,
       doctor: /^dr\.[a-z]+@sggs\.ac\.in$/i,
@@ -38,7 +39,7 @@ const LoginPage = () => {
 
     try {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      navigate(`/${formData.role}-dashboard`); // Corrected role-based navigation
+      navigate(`/${formData.role}-dashboard`);
     } catch (err) {
       setError("Invalid email or password");
     } finally {
@@ -61,22 +62,39 @@ const LoginPage = () => {
         {error && <p className="text-red-400 text-center mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Role Selection */}
+          {/* Role Selection - Radio Button Group */}
           <div>
-            <label className="block text-white/80">Role</label>
-            <select
-              value={formData.role}
-              onChange={(e) =>
-                setFormData({ ...formData, role: e.target.value })
-              }
-              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
-            >
-              <option value="student">Student</option>
-              <option value="mtech">M.Tech Student</option>
-              <option value="faculty">Faculty</option>
-              <option value="admin">Admin</option>
-              <option value="doctor">Doctor</option>
-            </select>
+            <label className="block text-white/80 mb-2">Role</label>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { id: "student", name: "Student" },
+                { id: "mtech", name: "M.Tech" },
+                { id: "faculty", name: "Faculty" },
+                { id: "admin", name: "Admin" },
+                { id: "doctor", name: "Doctor" },
+              ].map((role) => (
+                <label
+                  key={role.id}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all ${
+                    formData.role === role.id
+                      ? "bg-blue-500 text-white"
+                      : "bg-white/10 text-white/80 hover:bg-white/20"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="role"
+                    value={role.id}
+                    checked={formData.role === role.id}
+                    onChange={() =>
+                      setFormData({ ...formData, role: role.id })
+                    }
+                    className="hidden"
+                  />
+                  <span>{role.name}</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Email Field */}
@@ -139,10 +157,20 @@ const LoginPage = () => {
         <p className="text-center text-white/60 mt-4">
           Don't have an account?{" "}
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/signup")}
             className="text-blue-400 hover:underline"
           >
             Sign Up
+          </button>
+        </p>
+        <p className="text-center text-white/60 mt-4">
+          <br />
+          Click for :{" "}
+          <button
+            onClick={() => navigate("/parent-portal")}
+            className="text-blue-400 hover:underline"
+          >
+            Parent Portal
           </button>
         </p>
       </motion.div>

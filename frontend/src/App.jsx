@@ -6,22 +6,29 @@ import NotificationComponent from './components/NotificationComponent';
 import BookingComponent from './components/BookingComponent';
 import ComplaintPage from './pages/ComplaintPage';
 import ApplicationComponent from './components/ApplicationComponent';
-import AdminLogin from './pages/AdminLogin';
-import BudgetComponent from './components/BudgetComponent';
-import AdminDashboard from './components/Dashboard/AdminDashboard';
+import ComplaintComponent from './components/ComplaintComponent';
+import "./index.css"
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ParentPortal from './pages/ParentPortal';
+import BudgetComponent from './components/BudgetComponent';
+import Studentdashboard from './pages/student-dashboard';
+import SubmitApplication from './components/ApplicationFolder/submitApplication';
+import ApplicationPage from './components/ApplicationComponent';
+import ManageApplications from './components/ApplicationFolder/ManageApplications';
+import ApplicationNavbar from './components/ApplicationFolder/ApplicationNavbar';
+import ViewApplications from './components/ApplicationFolder/ViewApplications';
+import BudgetNavbar from './components/budgetcomponents/BudgetNavbar';
+import ApproveExpenses from './components/budgetcomponents/ApproveExpenses';
+import UpdateBudget from './components/budgetcomponents/UpdateBudget';
+import ViewAllBudgets from './components/budgetcomponents/ViewBudget';
+import LogoutButton from './components/LogoutButton';
+import LandingPage from './pages/LandingPage';
+import PrivateRoute from './routes/PrivateRoute';
 import AdminComplaints from './components/Dashboard/AdminComplaints';
-import AdminApprovedComplaints from './components/Dashboard/AdminApprovedComplaints';
-import AdminRejectedComplaints from './components/Dashboard/AdminRejectedComplaints';
-import AdminPendingComplaints from './components/Dashboard/AdminPendingComplaints';
-import AdminNotifications from './components/Dashboard/AdminNotifications';
-import './index.css';
-import LiveResults from "./components/LiveResult";
-import ElectionParticipant from './pages/electionparticipant';
-import CandidateRegistration from './pages/CandidateRegistration';
-import VotingPage from "./components/VotingPage";
+import ComplaintPage from './pages/ComplaintPage';
+import AdminDashboard from './components/Dashboard/AdminDashboard';
+
 const App = () => {
   // ✅ Define uploadedImageURL in state
   const [uploadedImageURL, setUploadedImageURL] = useState(null);
@@ -52,32 +59,56 @@ const App = () => {
   return (
     <Router>
      
-      {/* Routes */}
-      <Routes>
-      <Route path="/results" element={<LiveResults />} />
-      
-        <Route path='/admin/election' element={<CandidateRegistration/>} />
-        <Route path="/electionparticipant" element={<ElectionParticipant/>}/>
-        <Route path="/vote" element={<VotingPage />} />
-        <Route path="/admin-dashboard" element={<PrivateRoute role="admin"><AdminDashboard /></PrivateRoute>} />
-        <Route path="/admin/complaints" element={<PrivateRoute role="admin"><AdminComplaints /></PrivateRoute>} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<SignupPage />} />
-        <Route path="/student-dashboard" element={<HomePage />} />
-        <Route path="/parent-portal" element={<ParentPortal />} />
-        <Route path="/notifications" element={<NotificationComponent />} />
-        <Route path="/booking" element={<BookingComponent />} />
-        <Route path="/applications" element={<ApplicationComponent />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/budget" element={<BudgetComponent />} />
-        <Route path="/complaints" element={<ComplaintPage />} />
-        <Route path="/admin/approved" element={<AdminApprovedComplaints />} />
-        <Route path="/admin/rejected" element={<AdminRejectedComplaints />} />
-        <Route path="/admin/pending" element={<AdminPendingComplaints />} />
-        <Route path="/admin/notifications" element={<AdminNotifications />} />
-      </Routes>
-    </Router>
-  );  
+        <Router>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/application" element={<ApplicationPage />} />
+                <Route path='/logout' element={<LogoutButton />} />
+                {/* <Route path="/verify-email" element={<VerifyEmailPage />} /> */}
+                <Route exact path="/student-dashboard" element={<Studentdashboard />} />
+                <Route exact path="/parent-portal" element={<ParentPortal />} />
+                <Route path="/elections" element={<ElectionPage />} />
+                <Route path="/notifications" element={<NotificationComponent />} />
+                <Route path="/booking" element={<BookingComponent />} />
+                <Route path="/applications" element={<ApplicationComponent />} />
+                <Route path="/complaints" element={<ComplaintComponent />} />
+                <Route path="/budget" element={<BudgetComponent />} />
+
+
+                <Route path='/appnav' element={<ApplicationNavbar />} />
+                <Route path='/appmanage' element={<ManageApplications />} />
+                <Route path='/appsubmit' element={<SubmitApplication />} />
+                <Route path='/appview' element={<ViewApplications />} />
+
+
+                <Route path='/Budgetnav' element={<BudgetNavbar />} />
+                <Route path='/BudgetApprove' element={<ApproveExpenses />} />
+                <Route path='/BudgetUpdate' element={<UpdateBudget />} />
+                <Route path='/budgetView' element={<ViewAllBudgets />} />
+
+                <Route
+                     path="/admin/complaints"
+                     element={
+                    // <PrivateRoute role="admin">
+                        <AdminComplaints />
+                    // </PrivateRoute>
+                     }
+                />
+                <Route path="/complaints" element={<ComplaintPage />} />
+                <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
+
+
+                
+                {/* <AdminDashboard /> */}
+{/* //////////// */}
+
+
+            </Routes>
+        </Router>
+    );
 };
 
 export default App;

@@ -39,49 +39,15 @@ const ModuleCard = ({ icon: Icon, title, description, link, i }) => (
 );
 
 const HomePage = () => {
-  const modules = [
-    { id: 1, title: "Elections", description: "Secure voting & live tracking", icon: HomeIcon, link: "/vote" },
-    { id: 2, title: "Notifications", description: "Health & leave alerts", icon: BellIcon, link: "/notifications" },
-    { id: 3, title: "Booking", description: "Reserve campus facilities", icon: CalendarIcon, link: "/booking" },
-    { id: 4, title: "Applications", description: "Submit & track approvals", icon: DocumentTextIcon, link: "/applications" },
-    { id: 5, title: "Complaints", description: "Anonymous complaint system", icon: ChatBubbleBottomCenterTextIcon, link: "/complaints" },
-    { id: 6, title: "Budget Tracking", description: "Transparent finance records", icon: BanknotesIcon, link: "/budget" },
-    { id: 7, title: "Cheating Record", description: "Academic integrity & records", icon: ExclamationCircleIcon, link: "/cheating" },
-  ];
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white">
-      {/* Topbar */}
-      <nav className="bg-gradient-to-r from-blue-800 to-blue-900/95 backdrop-blur-md border-b border-white/6">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-md bg-white/6">
-              <Bars3Icon className="w-6 h-6 text-teal-300" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-blue-400">
-                Team Sanyojan
-              </h1>
-              <p className="text-xs text-gray-300 -mt-1">Automated College System</p>
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center gap-6">
-            {modules.slice(0, 5).map((m) => (
-              <Link key={m.id} to={m.link} className="text-sm text-gray-200 hover:text-white transition">
-                {m.title}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link to="/profile" className="text-sm text-gray-200 hover:text-white">Profile</Link>
-            <Link to="/logout" className="px-3 py-1 text-sm font-medium rounded-md bg-red-600/20 hover:bg-red-600/30 transition">
-              Logout
-            </Link>
-          </div>
-        </div>
-      </nav>
+    const modules = [
+        { id: 1, title: "Elections", description: "Secure voting & live tracking", icon: "🗳️", link: "/elections" },
+        { id: 2, title: "Notifications", description: "Health & leave alerts", icon: "📢", link: "/notifications" },
+        { id: 3, title: "Booking", description: "Reserve campus facilities", icon: "🏢", link: "/booking" },
+        { id: 4, title: "Applications", description: "Submit & track approvals", icon: "📄", link: "/applications" },
+        { id: 5, title: "Complaints", description: "Anonymous complaint system", icon: "💬", link: "/complaints" },
+        { id: 6, title: "Budget Tracking", description: "Transparent finance records", icon: "💰", link: "/budget" },
+        
+    ];
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
@@ -91,18 +57,26 @@ const HomePage = () => {
             <p className="text-xs text-gray-300 mt-1">Quick access to modules</p>
           </div>
 
-          <nav className="flex-1">
-            <ul className="space-y-2">
-              {modules.map((m) => (
-                <li key={m.id}>
-                  <Link to={m.link} className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/6 transition">
-                    <m.icon className="w-5 h-5 text-teal-300" />
-                    <span className="text-sm text-gray-100 font-medium">{m.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+            {/* Main Content */}
+            <div className="flex flex-1">
+                {/* Sidebar */}
+                <aside className="w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white p-6 flex flex-col">
+                    <h2 className="text-xl font-semibold mb-6 text-center">Dashboard</h2>
+                    <nav>
+                        <ul className="space-y-3">
+                            {modules.map((module) => (
+                                <li key={module.id}>
+                                    <Link to={module.link} className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                                        <span className="mr-3 text-xl">{module.icon}</span> {module.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                    <Link to="/logout" className="mt-auto text-center text-red-400 hover:text-red-600 font-semibold transition">
+                        Logout 123
+                    </Link>
+                </aside>
 
           <div className="text-sm text-gray-300">
             <div>Signed in as</div>

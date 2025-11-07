@@ -53,6 +53,7 @@ const SignupPage = () => {
 
     try {
       if (formData.role === "admin") {
+        // 🔹 Replace with secure admin authentication
         if (formData.adminUsername === "admin" && formData.adminPassword === "admin123") {
           navigate("/admin-dashboard");
           return;
@@ -63,6 +64,10 @@ const SignupPage = () => {
 
       if (!validateEmail(formData.email, formData.role)) {
         throw new Error(`Invalid email format for ${formData.role}`);
+      }
+
+      if (passwordStrength < 3) {
+        throw new Error("Password is too weak. Use a stronger password.");
       }
 
       const userCredential = await createUserWithEmailAndPassword(
@@ -108,7 +113,11 @@ const SignupPage = () => {
       >
         <h1 className="text-4xl font-bold text-white mb-4 text-center">Sign Up</h1>
 
-        {error && <div className="mb-4 p-3 bg-red-500/20 text-red-300 rounded-lg">⚠️ {error}</div>}
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/20 text-red-300 rounded-lg">
+            ⚠ {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Role Selection */}
@@ -149,7 +158,9 @@ const SignupPage = () => {
                 <input
                   type="text"
                   value={formData.adminUsername}
-                  onChange={(e) => setFormData({ ...formData, adminUsername: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, adminUsername: e.target.value })
+                  }
                   required
                   className="w-full p-3 bg-white/5 border border-white/20 rounded-lg text-white"
                 />
@@ -161,7 +172,9 @@ const SignupPage = () => {
                 <input
                   type="password"
                   value={formData.adminPassword}
-                  onChange={(e) => setFormData({ ...formData, adminPassword: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, adminPassword: e.target.value })
+                  }
                   required
                   className="w-full p-3 bg-white/5 border border-white/20 rounded-lg text-white"
                 />
@@ -175,7 +188,9 @@ const SignupPage = () => {
                 <input
                   type="text"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, fullName: e.target.value })
+                  }
                   required
                   className="w-full p-3 bg-white/5 border border-white/20 rounded-lg text-white"
                 />
@@ -187,7 +202,9 @@ const SignupPage = () => {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   required
                   className="w-full p-3 bg-white/5 border border-white/20 rounded-lg text-white"
                 />
@@ -206,16 +223,34 @@ const SignupPage = () => {
                   required
                   className="w-full p-3 bg-white/5 border border-white/20 rounded-lg text-white"
                 />
+                <div className="mt-2 text-sm text-gray-300">
+                  Password Strength:{" "}
+                  <span
+                    className={
+                      passwordStrength < 2
+                        ? "text-red-400"
+                        : passwordStrength < 3
+                        ? "text-yellow-400"
+                        : "text-green-400"
+                    }
+                  >
+                    {["Weak", "Moderate", "Strong", "Very Strong"][passwordStrength]}
+                  </span>
+                </div>
               </div>
             </>
           )}
 
-<button type="submit" className="w-full bg-blue-500 text-white py-3 rounded-lg">
-  {isLoading ? "Processing..." : formData.role === "admin" ? "Log In" : "Sign Up"}
-</button>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-all"
+          >
+            {isLoading ? "Processing..." : formData.role === "admin" ? "Log In" : "Sign Up"}
+          </button>
 
-           {/* 🔹 Login Option */}
-           <p className="text-center text-white/80 mt-4">
+          {/* Login Option */}
+          <p className="text-center text-white/80 mt-4">
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}
