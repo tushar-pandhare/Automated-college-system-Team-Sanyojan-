@@ -11,6 +11,8 @@ const LoginPage = () => {
     email: "",
     password: "",
     role: "student",
+    adminUsername: "",
+    adminPassword: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,17 +33,28 @@ const LoginPage = () => {
     setError("");
     setIsLoading(true);
 
-    if (!validateEmail(formData.email, formData.role)) {
-      setError(`Invalid ${formData.role} email format`);
-      setIsLoading(false);
-      return;
-    }
-
     try {
+      if (formData.role === "admin") {
+        // 🔹 Replace with secure admin authentication
+        if (
+          formData.adminUsername === "admin" &&
+          formData.adminPassword === "admin123"
+        ) {
+          navigate("/admin-dashboard");
+          return;
+        } else {
+          throw new Error("Invalid Admin credentials");
+        }
+      }
+
+      if (!validateEmail(formData.email, formData.role)) {
+        throw new Error(`Invalid ${formData.role} email format`);
+      }
+
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
       navigate(`/${formData.role}-dashboard`);
     } catch (err) {
-      setError("Invalid email or password");
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -97,41 +110,84 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Email Field */}
-          <div>
-            <label className="block text-white/80">Email</label>
-            <div className="relative">
-              <EnvelopeIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
-                placeholder="your.email@sggs.ac.in"
-              />
-            </div>
-          </div>
+          {/* Conditional Fields */}
+          {formData.role === "admin" ? (
+            <>
+              {/* Admin Username */}
+              <div>
+                <label className="block text-white/80">Admin Username</label>
+                <div className="relative">
+                  <EnvelopeIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
+                  <input
+                    type="text"
+                    required
+                    value={formData.adminUsername}
+                    onChange={(e) =>
+                      setFormData({ ...formData, adminUsername: e.target.value })
+                    }
+                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
+                    placeholder="Enter admin username"
+                  />
+                </div>
+              </div>
 
-          {/* Password Field */}
-          <div>
-            <label className="block text-white/80">Password</label>
-            <div className="relative">
-              <LockClosedIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
-              <input
-                type="password"
-                required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
-                placeholder="••••••••"
-              />
-            </div>
-          </div>
+              {/* Admin Password */}
+              <div>
+                <label className="block text-white/80">Admin Password</label>
+                <div className="relative">
+                  <LockClosedIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
+                  <input
+                    type="password"
+                    required
+                    value={formData.adminPassword}
+                    onChange={(e) =>
+                      setFormData({ ...formData, adminPassword: e.target.value })
+                    }
+                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
+                    placeholder="Enter admin password"
+                  />
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Email Field */}
+              <div>
+                <label className="block text-white/80">Email</label>
+                <div className="relative">
+                  <EnvelopeIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
+                    placeholder="your.email@sggs.ac.in"
+                  />
+                </div>
+              </div>
+
+              {/* Password Field */}
+              <div>
+                <label className="block text-white/80">Password</label>
+                <div className="relative">
+                  <LockClosedIcon className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" />
+                  <input
+                    type="password"
+                    required
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
+                    placeholder="••••••••"
+                  />
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Forgot Password & Login Button */}
           <div className="flex justify-between items-center">

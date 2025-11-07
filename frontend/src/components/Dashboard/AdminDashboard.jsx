@@ -31,13 +31,13 @@ const AdminDashboard = () => {
         candidate.id === candidateId ? { ...candidate, status: "approved" } : candidate
       ));
     } catch (error) {
-      alert(`Failed to approve candidate:  ${error.message}`);
+      alert(`Failed to approve candidate: ${error.message}`);
     }
   };
 
   const sections = [
     { title: "Manage Elections", description: "View, create, and manage student elections.", icon: "🗳", link: "/admin/election" },
-    { title: "Manage Complaints", description: "Review and resolve student complaints.", icon: "💬", link: "/admin/complaints" }, // ✅ Corrected link
+    { title: "Manage Complaints", description: "Review and resolve student complaints.", icon: "💬", link: "/admin/complaints" },
     { title: "Manage Budgets", description: "Track budgets and verify expenses.", icon: "💰", link: "/admin/budgets" },
     { title: "Manage Notifications", description: "Send and monitor campus notifications.", icon: "📢", link: "/admin/notifications" },
     { title: "Manage Bookings", description: "Approve or cancel facility bookings.", icon: "🏢", link: "/admin/bookings" },

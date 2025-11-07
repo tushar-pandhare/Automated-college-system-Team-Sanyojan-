@@ -18,11 +18,19 @@ const UpdateBudget = () => {
 
   // Fetch budget details
   useEffect(() => {
+    if (!id) {
+      console.error("Budget ID is undefined");
+      setMessage("Invalid budget ID.");
+      setLoading(false);
+      return;
+    }
+  
     const fetchBudget = async () => {
       try {
+        console.log("Fetching budget with ID:", id);
         const budgetRef = doc(db, "budgets", id);
         const docSnap = await getDoc(budgetRef);
-
+  
         if (docSnap.exists()) {
           setBudget(docSnap.data());
         } else {
@@ -35,10 +43,10 @@ const UpdateBudget = () => {
         setLoading(false);
       }
     };
-
+  
     fetchBudget();
   }, [id]);
-
+  
   // Handle input changes
   const handleChange = (e) => {
     setBudget({ ...budget, [e.target.name]: e.target.value });

@@ -7,6 +7,7 @@ const BudgetComponent = () => {
     return (
         <div className="container mx-auto p-4">
             <BudgetNavbar />
+            alert("Budget Component Loaded");
         </div>
     );
 };

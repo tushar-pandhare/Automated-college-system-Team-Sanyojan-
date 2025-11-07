@@ -11,11 +11,17 @@ const ManageBudgets = () => {
   // Fetch budgets from Firestore
   const fetchBudgets = async () => {
     try {
+      console.log("Fetching budgets...");
       const querySnapshot = await getDocs(collection(db, "budgets"));
+      console.log("Query Snapshot:", querySnapshot);
+  
       const budgetList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+  
+      console.log("Fetched Budgets:", budgetList);
+  
       setBudgets(budgetList);
       setLoading(false);
     } catch (error) {
@@ -24,11 +30,17 @@ const ManageBudgets = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
-    fetchBudgets();
+    const fetchData = async () => {
+      await fetchBudgets();
+      setLoading(false); // Ensure loading stops
+    };
+    fetchData();
   }, []);
-
+  
+  
   // Handle status change
   const handleStatusChange = async (budget, status) => {
     try {

@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  auth, 
-  submitComplaint, 
-  fetchApprovedComplaints, 
-  fetchComplaints, 
-  approveComplaint, 
-  rejectComplaint 
-} from "../firebase2"; 
+import {
+  auth,
+  submitComplaint,
+  fetchComplaints,
+  approveComplaint,
+  rejectComplaint,
+  logout,
+} from "../firebase2";
 import { onAuthStateChanged } from "firebase/auth";
-import { logout } from "../firebase2"; // Import logout function
-
-const handleLogout = async () => {
-  await logout();
-  window.location.href = "/login"; // Redirect after logout
-};
 
 const ComplaintPage = () => {
   // Form state
@@ -31,21 +25,26 @@ const ComplaintPage = () => {
   // Admin toggle
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // Handle logout
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = "/login";
+  };
+
   // Fetch user authentication status
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-      } else {
-        setUserId(null);
-      }
+      if (user) setUserId(user.uid);
+      else setUserId(null);
     });
   }, []);
 
   // Fetch approved complaints from Firebase
   useEffect(() => {
-    fetchApprovedComplaints()
-      .then((data) => setComplaints(data))
+    fetchComplaints("approved")
+      .then((res) => {
+        if (res.success) setComplaints(res.complaints);
+      })
       .catch((err) => console.error("Error fetching approved complaints:", err));
   }, []);
 
@@ -53,33 +52,34 @@ const ComplaintPage = () => {
   useEffect(() => {
     if (isAdmin) {
       fetchComplaints("pending")
-        .then((data) => setPendingComplaints(data))
+        .then((res) => {
+          if (res.success) setPendingComplaints(res.complaints);
+        })
         .catch((err) => console.error("Error fetching pending complaints:", err));
     }
   }, [isAdmin]);
 
   // Handle complaint submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) return;
+
     if (!userId) {
       setSubmissionMessage("You must be logged in to submit a complaint.");
       return;
     }
 
     const newComplaint = { title, description, isAnonymous, userId };
+    const res = await submitComplaint(newComplaint, userId);
 
-    submitComplaint(newComplaint)
-      .then(() => {
-        setSubmissionMessage("Complaint submitted successfully!");
-        setTitle("");
-        setDescription("");
-        setIsAnonymous(true);
-      })
-      .catch((err) => {
-        console.error("Submission error:", err);
-        setSubmissionMessage("Error submitting complaint.");
-      });
+    if (res.success) {
+      setSubmissionMessage("Complaint submitted successfully!");
+      setTitle("");
+      setDescription("");
+      setIsAnonymous(true);
+    } else {
+      setSubmissionMessage("Error submitting complaint.");
+    }
   };
 
   return (
@@ -104,33 +104,43 @@ const ComplaintPage = () => {
           <nav>
             <ul className="space-y-3">
               <li>
-                <a href="/HomePage" className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                <a
+                  href="/HomePage"
+                  className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="/complaints" className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                <a
+                  href="/complaints"
+                  className="flex items-center px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                >
                   Complaints
                 </a>
               </li>
             </ul>
           </nav>
-          
-          <button 
-    onClick={handleLogout} 
-    className="py-2 text-center mt-100  text-red-400 hover:text-red-600 font-semibold transition"
-  >
-    Logout
-  </button>
 
+          <button
+            onClick={handleLogout}
+            className="py-2 text-center mt-auto text-red-400 hover:text-red-600 font-semibold transition"
+          >
+            Logout
+          </button>
         </aside>
 
         {/* Main Content */}
         <main className="flex-1 bg-gray-100 p-10">
           {/* Complaint Submission Form */}
-          <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-3xl font-bold text-gray-800 mb-4">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-3xl font-bold text-gray-800 mb-4"
+          >
             Submit a Complaint
           </motion.h1>
+
           <motion.form
             onSubmit={handleSubmit}
             className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition space-y-4"
@@ -153,7 +163,9 @@ const ComplaintPage = () => {
               className="w-full p-3 border border-gray-300 rounded-md"
             ></textarea>
             <div className="flex items-center">
-              <label className="mr-2 text-gray-700 font-semibold">Submit Anonymously?</label>
+              <label className="mr-2 text-gray-700 font-semibold">
+                Submit Anonymously?
+              </label>
               <select
                 value={isAnonymous ? "yes" : "no"}
                 onChange={(e) => setIsAnonymous(e.target.value === "yes")}
@@ -163,21 +175,36 @@ const ComplaintPage = () => {
                 <option value="no">No</option>
               </select>
             </div>
-            <motion.button type="submit" className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <motion.button
+              type="submit"
+              className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
               Submit Complaint
             </motion.button>
-            {submissionMessage && <div className="mt-4 text-center text-green-600">{submissionMessage}</div>}
+            {submissionMessage && (
+              <div className="mt-4 text-center text-green-600">
+                {submissionMessage}
+              </div>
+            )}
           </motion.form>
 
-
           {/* Approved Complaints */}
-          <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">Approved Complaints</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">
+            Approved Complaints
+          </h2>
           {complaints.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {complaints.map((complaint) => (
-                <div key={complaint.id} className="bg-white p-6 rounded-lg shadow-md">
-                  <h3 className="text-xl font-semibold text-gray-800">{complaint.complaintText.title}</h3>
-                  <p className="text-gray-600 mt-2">{complaint.complaintText.description}</p>
+                <div
+                  key={complaint.id}
+                  className="bg-white p-6 rounded-lg shadow-md"
+                >
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    {complaint.complaintText.title}
+                  </h3>
+                  <p className="text-gray-600 mt-2">
+                    {complaint.complaintText.description}
+                  </p>
                 </div>
               ))}
             </div>
