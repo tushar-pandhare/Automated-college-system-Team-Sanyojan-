@@ -244,3 +244,40 @@ const ManageBookings = () => {
 };
 
 export default ManageBookings;
+
+
+//BookingService.js
+import { db } from "../firebase";
+import { collection, addDoc, getDocs, doc, updateDoc } from "firebase/firestore";
+
+const BOOKINGS_COLLECTION = "facilityBookings";
+
+export const submitBooking = async (booking) => {
+  try {
+    await addDoc(collection(db, BOOKINGS_COLLECTION), booking);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
+export const fetchBookings = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, BOOKINGS_COLLECTION));
+    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
+export const updateBookingStatus = async (id, status) => {
+  try {
+    const bookingRef = doc(db, BOOKINGS_COLLECTION, id);
+    await updateDoc(bookingRef, { status });
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
