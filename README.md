@@ -1,75 +1,125 @@
-# Automated-college-system-Team-Sanyojan-
+# OpenCampus
 
-## Problem Statement
+A web-based platform designed to improve transparency, accountability, and efficiency in college administration. The system digitizes key institutional processes such as student elections, facility bookings, approvals, complaint management, and budget tracking through a centralized portal.
 
-Colleges often struggle with transparency in administrative processes, student elections, financial tracking, and complaint management. Manual processes lead to delays, lack of accountability, and limited student involvement. An automated, paperless system can improve efficiency, fairness, and accessibility.
+## Features
 
-## Background
+### Student Election System
 
-Current college administrative processes lack transparency, efficiency, and accessibility for students and faculty. There is no centralized digital system to manage elections, approvals, complaints, budget tracking, and student-related notifications. This results in delayed processes, lack of accountability, and limited visibility for students and faculty members.
+* Secure online voting using college email authentication
+* Candidate profiles and election management
+* Transparent result publishing
 
-## Proposed Solution
+### Application & Approval Workflow
 
-We propose developing a web-based platform that digitizes key administrative functions in a transparent and structured manner. This platform will ensure fair elections, automated approvals, budget accountability, anonymous complaint handling, and make key information accessible to students and faculty. The system will promote transparency, efficiency, and accountability across the college's administrative processes.
+* Event, sponsorship, and budget request submissions
+* Multi-level approval process
+* Real-time status tracking
 
-## Key Features & Functionalities
+### Campus Facility Booking
 
-### 1. Student Election System
-- Online election platform for student councils with detailed candidate profiles.
-- Secure voting mechanism with authentication using college email IDs.
-- Live result tracking to ensure transparency in election results.
+* Online booking for auditoriums, sports facilities, and other resources
+* Availability management and approval workflow
 
-### 2. Automated Health & Leave Notifications
-- Automated emails sent to class coordinators when a student is reported sick by the college doctor.
-- Automated notifications to parents if a student leaves campus, ensuring safety and tracking.
+### Anonymous Complaint Portal
 
-### 3. Campus Facility Booking System
-- Online prior booking system for campus facilities (e.g., tennis courts, auditorium).
-- Approval mechanism from relevant authorities.
-- Availability status visible to students and faculty.
+* Anonymous complaint submission
+* Community visibility and moderation support
+* Structured grievance tracking
 
-### 4. Transparent Application & Approval System
-- A centralized portal to submit applications for event organization, budget approvals, and sponsorships.
-- Applications are visible to all students and faculty for transparency.
-- A structured approval workflow where designated authorities review and approve requests.
-- Priority-based escalation for unattended applications.
-- Real-time tracking of application status for all stakeholders.
+### Budget & Sponsorship Transparency
 
-### 5. Academic Integrity & Cheating Record System
-- Public display of student names, reasons, and proof for cheating incidents during exams.
-- Ensures transparency regarding academic integrity violations.
+* Public budget and sponsorship records
+* Expense proofs and documentation uploads
+* Fund utilization tracking
 
-### 6. Anonymous Complaint System
-- Allows students to submit complaints anonymously.
-- Complaints are visible to all members of the college community.
-- Moderation system filters out inappropriate content.
-- The identity of anonymous complainants is revealed only if a majority of board members approve.
+### Health & Leave Notifications
 
-### 7. Transparent College Budget & Sponsorship Tracking
-- Public visibility of all college sponsorships and budgets (including event funds and departmental budgets).
-- Proofs of expenses (bills, receipts, images) must be uploaded for verification and transparency.
-- Transparent tracking of mess budgets managed by student bodies.
+* Automated notifications for medical reports
+* Parent and faculty alerts for student leave activities
 
-### 8. Restricted Access for College Members Only
-- The platform is accessible only through college email IDs, ensuring authenticity and security.
+### Academic Integrity Management
 
-## Expected Impact
+* Record management for academic misconduct cases
+* Transparent documentation and reporting
 
-- **Transparency:** All administrative processes, applications, budgets, and election results are publicly accessible to students and faculty.
-- **Efficiency:** Automation of approvals, notifications, and tracking reduces the need for manual work and enhances workflow efficiency.
-- **Accountability:** Budget tracking and complaint handling provide mechanisms to prevent misuse of funds and power.
-- **Fair Elections:** A secure, structured online voting system ensures fair and transparent elections.
-- **Student Safety:** Health and leave notifications ensure that parents are informed and students are safe when off-campus.
+### Secure Access
 
-## Technology Stack
-- Frontend: React.js
-- Backend: Node.js, Express.js
-- Database: MongoDB
-- Authentication: JWT, OAuth (for email-based login)
-- Hosting: AWS, Heroku, or similar platforms
+* Restricted access through verified college email accounts
+* JWT-based authentication and authorization
 
-## Setup Instructions
+## Tech Stack
 
-1. Clone the repository:
-   ```bash
-   git clone <https://github.com/tushar-pandhare/Automated-college-system-Team-Sanyojan->
+**Frontend**
+
+* React.js
+* Tailwind CSS
+
+**Backend**
+
+* Node.js
+* Express.js
+
+**Database**
+
+* MongoDB
+
+**Authentication**
+
+* JWT
+* Email-based Authentication
+
+## Project Structure
+
+```text
+Automated-College-System/
+│
+├── frontend/
+│   ├── src/
+│   └── public/
+│
+├── backend/
+│   ├── routes/
+│   ├── models/
+│   ├── controllers/
+│   └── middleware/
+│
+└── README.md
+```
+
+## Getting Started
+
+```bash
+git clone https://github.com/tushar-pandhare/Automated-college-system-Team-Sanyojan-.git
+
+cd Automated-college-system-Team-Sanyojan-
+
+# Backend
+cd backend
+npm install
+
+# Frontend
+cd ../frontend
+npm install
+```
+
+Run the application:
+
+```bash
+# Backend
+npm run dev
+
+# Frontend
+npm run dev
+```
+
+## Impact
+
+* Improved administrative transparency
+* Faster approval and communication workflows
+* Increased student participation in governance
+* Better accountability in budgeting and fund management
+* Secure and centralized college operations
+
+```
+```
