@@ -121,5 +121,3 @@ npm run dev
 * Better accountability in budgeting and fund management
 * Secure and centralized college operations
 
-```
-```
